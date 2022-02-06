@@ -1,4 +1,4 @@
-import {View, Text, StyleSheet, TouchableHighlight} from "react-native";
+import {StyleSheet, Text, TouchableHighlight, View} from "react-native";
 
 const Button = ({submitTodo}) => (
     <View style={styles.buttonContainer}>

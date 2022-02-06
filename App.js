@@ -1,49 +1,52 @@
 import React, {Component} from "react";
-import {StatusBar} from 'expo-status-bar';
-import {ScrollView, StyleSheet, Text, View} from 'react-native';
+import {Animated, Easing, StatusBar, StyleSheet, Text, View, ScrollView} from 'react-native';
 import Mycomponent from "./components/Mycomponent";
 import Heading from "./components/Heading";
-import Input from "./components/Input";
-import Button from "./components/Button";
+import TodoInput from "./components/TodoInput";
 import TodoList from "./components/TodoList";
 import TabBar from "./components/TabBar";
+import Button from "./components/Button";
+
 let todoIndex = 0
 
 class App extends Component {
+
     constructor(props) {
         super(props);
         this.state = {
             inputValue: '',
             todos: [],
-            type: 'All'
+            type: 'All',
+            loading: true
         }
-        this.submitTodo = this.submitTodo.bind(this)
-        this.toggleComplete = this.toggleComplete.bind(this)
-        this.deleteTodo = this.deleteTodo.bind(this)
-        this.setType = this.setType.bind(this)
+        this.SubmitTodo = this.SubmitTodo.bind(this)
+        this.ToggleComplete = this.ToggleComplete.bind(this)
+        this.DeleteTodo = this.DeleteTodo.bind(this)
+        this.SetType = this.SetType.bind(this)
     }
 
-    setType (type) {
+    SetType(type) {
         this.setState({type})
     }
 
-    deleteTodo (todoIndex) {
+    DeleteTodo(todoIndex) {
         let {todos} = this.state
         todos = todos.filter((todo) => todo.todoIndex !== todoIndex)
         this.setState({todos})
     }
-    toggleComplete ( todoIndex ){
+
+    ToggleComplete(todoIndex) {
         let todos = this.state.todos
         todos.forEach((todo) => {
-            if( todo.todoIndex === todoIndex){
+            if (todo.todoIndex === todoIndex) {
                 todo.complete = !todo.complete
             }
         })
         this.setState({todos})
     }
 
-    submitTodo () {
-        if(this.state.inputValue.match(/^\s*$/)){
+    SubmitTodo() {
+        if (this.state.inputValue.match(/^\s*$/)) {
             return
         }
         const todo = {
@@ -60,36 +63,69 @@ class App extends Component {
 
     }
 
-    inputChange(inputValue){
-        console.log(' Input Value: ', inputValue);
+    InputChange(inputValue) {
+        console.log(' TodoInput Value: ', inputValue);
         this.setState({inputValue});
     }
 
+    componentDidMount() {
+        this.Animate();
+        setTimeout(() => this.setState({loading: false}), 2000)
+    }
+
+    AnimatedRotation = new Animated.Value(0);
+
+    Animate = () => {
+        Animated.timing(
+            this.AnimatedRotation,
+            {
+                toValue: 1,
+                duration: 1800,
+                easing: Easing.linear
+            }
+        ).start()
+    }
+
     render() {
+        const Rotation = this.AnimatedRotation.interpolate({
+            inputRange: [0, 1],
+            outputRange: ['0deg', '360deg']
+        })
 
-        const { inputValue, todos, type } = this.state
+        const {loading, inputValue, todos, type} = this.state
 
-        return (
-            <View style={styles.container}>
-                <Text>Open up App.js to start working on your app!</Text>
-                <Mycomponent/>
-                <StatusBar style="auto"/>
-                <ScrollView keyboardShouldPersistTaps='always'
-                            style={styles.content}>
-                    <Heading/>
-                    <Input
-                        inputValue={inputValue}
-                        inputChange={(text) => this.inputChange(text)}/>
-                    <TodoList
-                        type={type}
-                        toggleComplete={this.toggleComplete}
-                        deleteTodo={this.deleteTodo}
-                        todos={todos}/>
-                    <Button submitTodo={this.submitTodo}/>
-                </ScrollView>
-                <TabBar type={type} setType={this.setType}/>
-            </View>
-        );
+        if (loading) {
+            return (
+                <View style={styles.container2}>
+                    <Animated.Image
+                        source={require('./assets/35633-200.png')}
+                        style={{width: 40, height: 40, transform: [{rotate: Rotation}]}}
+                    />
+                </View>
+            )
+        } else {
+            return (
+                <View style={styles.container}>
+                    <Text>Open up App.js to start working on your app!</Text>
+                    <Mycomponent/>
+                    <StatusBar style="auto"/>
+                    <ScrollView keyboardShouldPersistTaps='always'
+                                style={styles.content}>
+                        <Heading/>
+                        <TodoInput
+                            inputValue={inputValue}
+                            inputChange={(text) => this.InputChange(text)}/>
+                        <TodoList
+                            type={type}
+                            toggleComplete={this.ToggleComplete}
+                            deleteTodo={this.DeleteTodo}
+                            todos={todos}/>
+                        <Button submitTodo={this.SubmitTodo}/>
+                    </ScrollView>
+                    <TabBar type={type} setType={this.SetType}/>
+                </View>
+            );
+        }
     }
 }
 
@@ -99,6 +135,12 @@ const styles = StyleSheet.create({
         backgroundColor: '#fff',
         // alignItems: 'center',
         // justifyContent: 'center',
+    },
+    container2: {
+        flex: 1,
+        backgroundColor: '#fff',
+        alignItems: 'center',
+        justifyContent: 'center',
     },
     content: {
         flex: 1,

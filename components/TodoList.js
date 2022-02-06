@@ -1,9 +1,9 @@
 import Todo from "./Todo";
 import {View} from "react-native";
 
-const TodoList = ({todos, deleteTodo, toggleComplete, type}) => {
+const TodoList = ({todos, DeleteTodo, ToggleComplete, type}) => {
 
-    const getVisibleTodos = (todos, type) => {
+    const GetVisibleTodos = (todos, type) => {
         switch (type) {
             case 'All':
                 return todos
@@ -16,12 +16,12 @@ const TodoList = ({todos, deleteTodo, toggleComplete, type}) => {
                 return []
         }
     }
-    todos = getVisibleTodos(todos, type)
+    todos = GetVisibleTodos(todos, type)
     todos = todos.map((todo, i) => {
         return (
             <Todo
-                deleteTodo={deleteTodo}
-                toggleComplete={toggleComplete}
+                DeleteTodo={DeleteTodo}
+                ToggleComplete={ToggleComplete}
                 key={i}
                 todo={todo}/>
         )

@@ -18,43 +18,44 @@ class Mycomponent extends Component {
         }
     }
 
-    updateYear() {
+    UpdateYear() {
         this.setState({
             year: this.state.year + 1
         })
     }
 
-    updateBook() {
+    UpdateBook() {
         this.setState({
             book: 'Express in Action'
         })
     }
 
-    initBook(){
+    InitBook() {
         this.setState({
             book: 'React Native in Action'
         })
     }
 
     render() {
-        const { book } = this.state
+        const {book} = this.state
         let leapyear = <Text>This is not a leapyear!</Text>
-        if(this.state.leapYear){
+        if (this.state.leapYear) {
             leapyear = <Text>This is a leapyear!</Text>
         }
-        return (<View>
+        return (
+            <View>
                 <Text
-                    onPress={() => this.updateYear()}>
+                    onPress={() => this.UpdateYear()}>
                     The year is: {this.state.year}
                 </Text>
                 <Text>{this.state.year}</Text>
                 <Text>Length: {this.state.info.length}</Text>
                 <Text>Type: {this.state.info.type}</Text>
                 {leapyear}
-                <Text onPress={() => this.initBook()}>init book text</Text>
+                <Text onPress={() => this.InitBook()}>init book text</Text>
                 <BookDisplay
-                    updateBook={ () => this.updateBook()}
-                    book={book} />
+                    updateBook={() => this.UpdateBook()}
+                    book={book}/>
             </View>
         )
     }

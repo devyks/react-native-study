@@ -1,4 +1,4 @@
-import {Text, TouchableHighlight, StyleSheet} from "react-native-web";
+import {StyleSheet, Text, TouchableHighlight} from "react-native";
 
 const TodoButton = ({onPress, complete, name}) => (
     <TouchableHighlight
@@ -6,7 +6,7 @@ const TodoButton = ({onPress, complete, name}) => (
         underlayColor={'#efefef'}
         style={styles.button}>
         <Text style={[styles.text, complete ? styles.complete : null,
-        name === 'Delete' ? styles.deleteButton : null]}>
+            name === 'Delete' ? styles.deleteButton : null]}>
             {name}
         </Text>
     </TouchableHighlight>
@@ -21,7 +21,7 @@ const styles = StyleSheet.create({
         borderRadius: 4,
         marginRight: 5
     },
-    text:{
+    text: {
         color: '#666666'
     },
     complete: {
