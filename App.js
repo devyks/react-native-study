@@ -6,6 +6,7 @@ import TodoInput from "./components/TodoInput";
 import TodoList from "./components/TodoList";
 import TabBar from "./components/TabBar";
 import Button from "./components/Button";
+import Parent from "./components/Parent";
 
 let todoIndex = 0
 
@@ -106,6 +107,7 @@ class App extends Component {
         } else {
             return (
                 <View style={styles.container}>
+                    <Parent/>
                     <Text>Open up App.js to start working on your app!</Text>
                     <Mycomponent/>
                     <StatusBar style="auto"/>
