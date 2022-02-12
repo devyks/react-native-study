@@ -1,7 +1,7 @@
 import Todo from "./Todo";
 import {View} from "react-native";
 
-const TodoList = ({todos, DeleteTodo, ToggleComplete, type}) => {
+const TodoList = ({todos, deleteTodo, toggleComplete, type}) => {
 
     const GetVisibleTodos = (todos, type) => {
         switch (type) {
@@ -20,8 +20,8 @@ const TodoList = ({todos, DeleteTodo, ToggleComplete, type}) => {
     todos = todos.map((todo, i) => {
         return (
             <Todo
-                DeleteTodo={DeleteTodo}
-                ToggleComplete={ToggleComplete}
+                deleteTodo={deleteTodo}
+                toggleComplete={toggleComplete}
                 key={i}
                 todo={todo}/>
         )

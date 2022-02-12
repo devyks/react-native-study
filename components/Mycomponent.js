@@ -52,7 +52,7 @@ class Mycomponent extends Component {
                 <Text>Length: {this.state.info.length}</Text>
                 <Text>Type: {this.state.info.type}</Text>
                 {leapyear}
-                <Text onPress={() => this.InitBook()}>init book text</Text>
+                <Text onPress={() => this.InitBook()}>init book text</Text><br/><br/>
                 <BookDisplay
                     updateBook={() => this.UpdateBook()}
                     book={book}/>
