@@ -1,5 +1,5 @@
 import React, {Component} from "react";
-import {Animated, Easing, StatusBar, StyleSheet, Text, View, ScrollView} from 'react-native';
+import {Platform, Animated, Easing, StatusBar, StyleSheet, Text, View, ScrollView} from 'react-native';
 import Mycomponent from "./components/Mycomponent";
 import Heading from "./components/Heading";
 import TodoInput from "./components/TodoInput";
@@ -82,7 +82,8 @@ class App extends Component {
             {
                 toValue: 1,
                 duration: 1800,
-                easing: Easing.linear
+                easing: Easing.linear,
+                useNativeDriver: false
             }
         ).start()
     }
@@ -107,12 +108,15 @@ class App extends Component {
         } else {
             return (
                 <View style={styles.container}>
-                    <Parent/>
-                    <Text>Open up App.js to start working on your app!</Text>
-                    <Mycomponent/>
-                    <StatusBar style="auto"/>
                     <ScrollView keyboardShouldPersistTaps='always'
-                                style={styles.content}>
+                                style={styles.content1}>
+                        <Parent/>
+                        <Text>Open up App.js to start working on your app!</Text>
+                        <Mycomponent/>
+                        <StatusBar style="auto"/>
+                    </ScrollView>
+                    <ScrollView keyboardShouldPersistTaps='always'
+                                style={styles.content2}>
                         <Heading/>
                         <TodoInput
                             inputValue={inputValue}
@@ -133,6 +137,7 @@ class App extends Component {
 
 const styles = StyleSheet.create({
     container: {
+        flexGrow: 1,
         flex: 1,
         backgroundColor: '#fff',
         // alignItems: 'center',
@@ -144,9 +149,12 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
     },
-    content: {
+    content1: {
         flex: 1,
-        paddingTop: 60
+        paddingTop: Platform.OS === 'ios' ? 60 : 0
+    },
+    content2: {
+        flex: 1
     }
 });
 

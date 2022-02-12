@@ -14,7 +14,8 @@ class TodoInput extends Component {
             this.animatedWidth,
             {
                 toValue: value,
-                duration: 750
+                duration: 750,
+                useNativeDriver: false
             }
         ).start();
     }

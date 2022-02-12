@@ -3,26 +3,31 @@ import {StyleSheet, Text, View} from "react-native";
 
 const ThemeContext = React.createContext()
 
-class Parent extends Component{
+class Parent extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            themeValue: 'light'
+        }
+    }
 
-    state = { themeValue : 'light'}
-
-    toggleThemeValue = () => {
+    ToggleThemeValue = () => {
         const value = this.state.themeValue === 'dark' ? 'light' : 'dark'
         this.setState({themeValue: value})
     }
+
     render() {
         return (
             <ThemeContext.Provider
                 value={{
                     themeValue: this.state.themeValue,
-                    toggleThemeValue: this.toggleThemeValue
+                    toggleThemeValue: this.ToggleThemeValue
                 }}
-                >
+            >
                 <View style={styles.container}>
                     <Text>Hello World</Text>
                 </View>
-                <Child1 />
+                <Child1/>
             </ThemeContext.Provider>
         )
     }
@@ -34,8 +39,8 @@ const Child2 = () => (
     <ThemeContext.Consumer>
         {(val) => (
             <View style={[styles.container,
-            val.themeValue === 'dark' &&
-            {backgroundColor: 'black'}]}>
+                val.themeValue === 'dark' &&
+                {backgroundColor: 'black'}]}>
                 <Text style={styles.text}>Hello from Component2</Text>
                 <Text style={styles.text}
                       onPress={val.toggleThemeValue}>

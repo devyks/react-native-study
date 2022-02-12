@@ -6,7 +6,12 @@ class BookDisplay extends Component {
         const { book, updateBook } = this.props
         return (
             <View>
-                <Text>{ this.props.book }</Text><br/><br/><br/>
+                <Text>{ this.props.book }</Text>
+                <Text>
+                    {
+                        "\n"
+                    }
+                </Text>
                 <Text onPress={updateBook}>
                     {book}
                 </Text>
